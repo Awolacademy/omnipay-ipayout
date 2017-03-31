@@ -17,7 +17,7 @@ $ composer require awolacademy/omnipay-ipayout
 
 The following gateways are provided by this package:
 
- * Total Apps Gateway
+ * iPayout
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay) repository.
 
