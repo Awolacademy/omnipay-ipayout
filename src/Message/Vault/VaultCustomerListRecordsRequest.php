@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\iPay\Message\Vault;
+namespace Omnipay\iPayout\Message\Vault;
 
-use Omnipay\iPay\Message\Transaction\AuthorizeRequest;
-use Omnipay\iPay\Message\Response\VaultCustomerListRecordsResponse;
+use Omnipay\iPayout\Message\Transaction\AuthorizeRequest;
+use Omnipay\iPayout\Message\Response\VaultCustomerListRecordsResponse;
 
 class VaultCustomerListRecordsRequest extends AuthorizeRequest
 {

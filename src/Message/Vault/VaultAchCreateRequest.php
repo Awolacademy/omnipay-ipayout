@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\iPay\Message\Vault;
+namespace Omnipay\iPayout\Message\Vault;
 
-use Omnipay\iPay\Message\Transaction\AuthorizeRequest;
+use Omnipay\iPayout\Message\Transaction\AuthorizeRequest;
 
 class VaultAchCreateRequest extends AuthorizeRequest
 {

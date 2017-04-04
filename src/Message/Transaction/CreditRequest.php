@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\iPay\Message\Transaction;
+namespace Omnipay\iPayout\Message\Transaction;
 
 class CreditRequest extends AuthorizeRequest
 {

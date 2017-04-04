@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\iPay\Message\Vault;
+namespace Omnipay\iPayout\Message\Vault;
 
 class VaultUpdateRequest extends VaultCreateRequest
 {

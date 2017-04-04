@@ -1,9 +1,9 @@
 <?php
 
-namespace Omnipay\iPay\Message\Subscription;
+namespace Omnipay\iPayout\Message\Subscription;
 
-use Omnipay\iPay\Message\Transaction\AuthorizeRequest;
-use Omnipay\iPay\Message\Response\SubscriptionAddResponse;
+use Omnipay\iPayout\Message\Transaction\AuthorizeRequest;
+use Omnipay\iPayout\Message\Response\SubscriptionAddResponse;
 
 class SubscriptionAddRequest extends AuthorizeRequest
 {

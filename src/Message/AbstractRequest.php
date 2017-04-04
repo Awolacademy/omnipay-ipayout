@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnipay\iPay\Message;
+namespace Omnipay\iPayout\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
-use Omnipay\iPay\Message\Response\Response;
-use Omnipay\iPay\ACH;
+use Omnipay\iPayout\Message\Response\Response;
+use Omnipay\iPayout\ACH;
 
 /**
  * Abstract Request

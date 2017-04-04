@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\iPay\Message;
+namespace Omnipay\iPayout\Message;
 
 class CreateUser extends AbstractRequest
 {

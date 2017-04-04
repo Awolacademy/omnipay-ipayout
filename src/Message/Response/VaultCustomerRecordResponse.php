@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\iPay\Message\Response;
+namespace Omnipay\iPayout\Message\Response;
 
 use \Omnipay\Common\Message\RequestInterface;
 

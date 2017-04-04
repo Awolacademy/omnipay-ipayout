@@ -1,12 +1,12 @@
 <?php
-namespace Omnipay\iPay;
+namespace Omnipay\iPayout;
 
 use DateTime;
 use DateTimeZone;
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Omnipay\Common\Helper;
-use Omnipay\iPay;
+use Omnipay\iPayout;
 
 /**
  * eWallet class

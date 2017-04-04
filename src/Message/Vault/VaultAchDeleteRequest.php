@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\iPay\Message\Vault;
+namespace Omnipay\iPayout\Message\Vault;
 
-use Omnipay\iPay\Message\Response\DeleteResponse;
+use Omnipay\iPayout\Message\Response\DeleteResponse;
 
 class VaultAchDeleteRequest extends VaultAchCreateRequest
 {

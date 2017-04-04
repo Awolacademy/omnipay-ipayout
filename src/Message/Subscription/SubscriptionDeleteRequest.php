@@ -1,8 +1,8 @@
 <?php
 
-namespace Omnipay\iPay\Message\Subscription;
+namespace Omnipay\iPayout\Message\Subscription;
 
-use Omnipay\iPay\Message\Response\SubscriptionDeleteResponse;
+use Omnipay\iPayout\Message\Response\SubscriptionDeleteResponse;
 
 class SubscriptionDeleteRequest extends SubscriptionAddRequest
 {

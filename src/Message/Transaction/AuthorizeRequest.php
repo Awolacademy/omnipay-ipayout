@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnipay\iPay\Message\Transaction;
+namespace Omnipay\iPayout\Message\Transaction;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\iPay\Message\AbstractRequest;
+use Omnipay\iPayout\Message\AbstractRequest;
 
 /**
  * Authorize Request
