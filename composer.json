@@ -9,7 +9,7 @@
         "pay",
         "payment",
         "purchase",
-        "mojopay"
+        "ipayout"
     ],
     "homepage": "https://github.com/awolacademy/omnipay-ipayout",
     "license": "MIT",
@@ -18,6 +18,12 @@
             "name": "Brandon Lis",
             "email": "knightar@gmail.com",
             "homepage": "http://artician.net",
+            "role": "Developer"
+        },
+        {
+            "name": "Jeffrey Brown",
+            "email": "jb@bogart.productions",
+            "homepage": "http://bogart.productions",
             "role": "Developer"
         }
     ],
