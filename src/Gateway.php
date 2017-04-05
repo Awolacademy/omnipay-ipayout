@@ -97,13 +97,17 @@ class Gateway extends AbstractGateway
         return $this->getParameter('MerchantPassword');
     }
 
+    public function checkUserName(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CheckIfUserNameExists', $parameters);
+    }
+
     public function createUser(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\TotalAppsGateway\Message\Transaction\eWallet_CreateUser', $parameters);
+        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CreateUser', $parameters);
     }
     
     public function issuePayment(array $parameters = array()) {
-        return $this->createRequest('\Omnipay\TotalAppsGateway\Message\Transaction\eWallet_Load', $parameters);
+        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_Load', $parameters);
         // eWallet_Load
         /*
         Guid MerchantGUID, 
@@ -117,17 +121,9 @@ class Gateway extends AbstractGateway
         */
     }
 
-    public function checkUserName(array $parameters = array()) {
-        return $this->createRequest('\Omnipay\TotalAppsGateway\Message\Transaction\eWallet_CheckIfUserNameExists', $parameters);
-       // 
-       /*
-        Guid MerchantGUID, 
-        String MerchantPassword, 
-        String UserName       
-       */
-    }
+
     public function checkAccountStatus(array $parameters = array()) {
-        return $this->createRequest('\Omnipay\TotalAppsGateway\Message\Transaction\eWallet_GetUserAccountStatus', $parameters);
+        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_GetUserAccountStatus', $parameters);
     //    
         /*
         Guid MerchantGUID, 

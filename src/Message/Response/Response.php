@@ -141,6 +141,7 @@ class Response extends AbstractResponse
      */
     public function getResponseText()
     {
+        // m_Text
         return ( isset($this->data->response) && isset($this->data->responsetext) ) ? $this->data->responsetext : null;
     }
 
@@ -151,6 +152,7 @@ class Response extends AbstractResponse
      */
     public function getCode()
     {
+        // m_Code
         return ( isset($this->data->response) && isset($this->data->response_code) ) ? (int)$this->data->response_code : null;
     }
     

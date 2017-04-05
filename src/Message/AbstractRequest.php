@@ -4,7 +4,6 @@ namespace Omnipay\iPayout\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 use Omnipay\iPayout\Message\Response\Response;
-use Omnipay\iPayout\ACH;
 
 /**
  * Abstract Request
@@ -85,12 +84,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
      */
     public function getBaseData()
     {
-        $this->validate('username', 'password');
+        $this->validate('MerchantGUID', 'MerchantPassword');
         
         $data = array();
-        $data['type'] = $this->getType();
-        $data['username'] = $this->getUsername();
-        $data['password'] = $this->getPassword();
+        $data['fn'] = $this->getType();
+        $data['MerchantGUID'] = $this->getUsername();
+        $data['MerchantPassword'] = $this->getPassword();
         return $data;
     }
 
@@ -98,6 +97,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
      * @param SimpleXMLElement $data
      * @return Response
      */
+
     public function sendData($data)
     {
         $headers      = array();
@@ -105,6 +105,48 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->createResponse($httpResponse->getBody());
     }
 
+    
+/* NEW JSON METOD     
+    public function sendRequest($action, $data = null, $method = RequestInterface::POST)
+    {
+        // don't throw exceptions for 4xx errors
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function ($event) {
+                if ($event['response']->isClientError()) {
+                    $event->stopPropagation();
+                }
+            }
+        );
+
+        // Return the response we get back from AlliedWallet Payments
+
+        // Create the HTTP request
+        $httpRequest = $this->httpClient->createRequest(
+            $method,
+            $this->getEndpoint() . $action,
+            array(
+                'Accept'        => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getToken(),
+                'Content-type'  => 'application/json'
+            ),
+            json_encode($data)
+        );
+
+        // Set the HTTP request options to TLS 1.2 and send the request,
+        // returning the response.
+        try {
+            // Set TLS version to 1.2
+            $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6);
+            return $httpRequest->send();
+        } catch (\Exception $e) {
+            throw new InvalidResponseException(
+                'Error communicating with payment gateway: ' . $e->getMessage(),
+                $e->getCode()
+            );
+        }
+    }
+*/    
     /**
      * @return string
      */
