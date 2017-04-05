@@ -20,5 +20,10 @@ class eWallet_CheckIfUserNameExists extends AbstractRequest
         $data['UserName'] = $this->getUserName();
         return $data;
     }
+    
+    public function sendData($data)
+    {
+        return $this->sendDataByClass($data, '\Omnipay\iPayout\Message\Response\CheckExistsResponse');
+    }
 }
 

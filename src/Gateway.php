@@ -54,7 +54,27 @@ class Gateway extends AbstractGateway
             'MerchantPassword' => ''
         );
     }
-    
+
+    /**
+     * Get the gateway username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->getParameter('username');
+    }
+
+    /**
+     * Set the gateway username
+     *
+     * @return AbstractRestRequest provides a fluent interface.
+     */
+    public function setUsername($value)
+    {
+        return $this->setParameter('username', $value);
+    }
+
     /**
      * Get the gateway username
      *
@@ -95,6 +115,16 @@ class Gateway extends AbstractGateway
     public function getAPIPassword()
     {
         return $this->getParameter('MerchantPassword');
+    }
+
+    public function getEwallet()
+    {
+        return $this->getParameter('eWallet');
+    }
+    
+    public function setEwallet($value)
+    {
+        return $this->setParameter('eWallet', $value);
     }
 
     public function checkUserName(array $parameters = array()) {

@@ -9,61 +9,16 @@ use Omnipay\Common\Message\RequestInterface;
  * Response
  */
 class Response extends AbstractResponse
-{
-    public static $responseCodes = array(
-        100 => 'Transaction was approved.',
-        200 => 'Transaction was declined by processor.',
-        200 => 'Transaction was declined by processor.',
-        201 => 'Do not honor.',
-        202 => 'Insufficient funds.',
-        203 => 'Over limit.',
-        204 => 'Transaction not allowed.',
-        220 => 'Incorrect payment information.',
-        221 => 'No such card issuer.',
-        222 => 'No card number on file with issuer.',
-        223 => 'Expired card.',
-        224 => 'Invalid expiration date.',
-        225 => 'Invalid card security code.',
-        240 => 'Call issuer for further information.',
-        250 => 'Pick up card.',
-        251 => 'Lost card.',
-        252 => 'Stolen card.',
-        253 => 'Fraudulent card.',
-        260 => 'Declined with further instructions available. (See responsetext)',
-        261 => 'Declined­Stop all recurring payments.',
-        262 => 'Declined­Stop this recurring program.',
-        263 => 'Declined­Update cardholder data available.',
-        264 => 'Declined­Retry in a few days.',
-        300 => 'Transaction was rejected by gateway.',
-        400 => 'Transaction error returned by processor.',
-        410 => 'Invalid merchant configuration.',
-        411 => 'Merchant account is inactive.',
-        420 => 'Communication error.',
-        421 => 'Communication error with issuer.',
-        430 => 'Duplicate transaction at processor.',
-        440 => 'Processor format error.',
-        441 => 'Invalid transaction information.',
-        460 => 'Processor feature not available.',
-        461 => 'Unsupported card type.'
-    );
-
-    /**
-     * The data contained in the response.
-     *
-     * @var mixed
-     */
-    protected $raw_data;
-    
+{    
     /**
      * Constructor
      *
      * @param RequestInterface $request the initiating request.
      * @param mixed $data
      */
-    public function __construct(RequestInterface $request, $raw_data)
+    public function __construct(RequestInterface $request, $data)
     {
-        parse_str($raw_data, $data);
-        $this->raw_data = (string)$raw_data;
+        $data = json_decode(json_encode($data), FALSE);
         parent::__construct($request, (object)$data);
     }
     
@@ -72,7 +27,10 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->data->response) && $this->data->response === '1';
+        if (isset($this->data->IsError) && $this->data->IsError == 1) {
+            return false;
+        }
+        return isset($this->data->response) && $this->data->response->m_Code === 0;
     }
     
     /**
@@ -98,19 +56,7 @@ class Response extends AbstractResponse
      */
     public function getTransactionId()
     {
-        return isset($this->data->orderid) && !empty($this->data->orderid) ?
-            (string)$this->data->orderid : null;
-    }
-
-    /**
-     * A reference provided by the gateway to represent this transaction
-     *
-     * @return null|string
-     */
-    public function getTransactionReference()
-    {
-        return isset($this->data->transactionid) && !empty($this->data->transactionid) ?
-            (string)$this->data->transactionid : null;
+        return ( isset($this->data->response) && isset($this->data->response->TransactionRefID) ) ? $this->data->response->TransactionRefID : null;
     }
 
     /**
@@ -119,11 +65,7 @@ class Response extends AbstractResponse
     public function getMessage()
     {
         $errors = array();
-        if (!$this->isSuccessful() && !is_null($this->getCode()) && $this->getCode() > 100) {
-            $errors[] = $this->getCodeText();
-        }
-        
-        if (!$this->isSuccessful() && !is_null($this->getResponseText())) {
+        if (!$this->isSuccessful()) {
             $errors[] = $this->getResponseText();
         }
         
@@ -141,8 +83,7 @@ class Response extends AbstractResponse
      */
     public function getResponseText()
     {
-        // m_Text
-        return ( isset($this->data->response) && isset($this->data->responsetext) ) ? $this->data->responsetext : null;
+        return ( isset($this->data->response) && isset($this->data->response->m_Text) ) ? $this->data->response->m_Text : null;
     }
 
     /**
@@ -153,27 +94,6 @@ class Response extends AbstractResponse
     public function getCode()
     {
         // m_Code
-        return ( isset($this->data->response) && isset($this->data->response_code) ) ? (int)$this->data->response_code : null;
-    }
-    
-    /**
-     * Response code
-     *
-     * @return null|string A response code from the payment gateway
-     */
-    public function getCodeText()
-    {
-        $code = $this->getCode();
-        return isset(static::$responseCodes[$code]) ? static::$responseCodes[$code] : null;
-    }
-    
-    /**
-     * Response customerHash
-     *
-     * @return null|string A response customerHash from the payment gateway
-     */
-    public function getCardReference()
-    {
-        return ( isset($this->data->response) && isset($this->data->customer_vault_id) ) ? (string) $this->data->customer_vault_id : null;
+        return ( isset($this->data->response) && isset($this->data->response->m_Code) ) ? (int)$this->data->response->m_Code : null;
     }
 }

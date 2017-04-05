@@ -13,14 +13,14 @@ abstract class AbstractRequest extends BaseAbstractRequest
     /**
      * @var string
      */
-    protected $liveEndpoint = 'https://GAZ.testewallet.com:80/eWalletWS/ws_Adapter.aspx';
+    protected $liveEndpoint = 'https://GAZ.testewallet.com/eWalletWS/ws_JsonAdapter.aspx';
                                                                        // ^ KVP endpoint
                                                                        // JSON endpoint ws_JsonAdapter.aspx
 
     /**
      * @var string
      */
-    protected $testEndpoint = 'https://GAZ.globalewallet.com:80/eWalletWS/ws_Adapter.aspx';
+    protected $testEndpoint = 'https://GAZ.globalewallet.com/eWalletWS/ws_JsonAdapter.aspx';
                                                                        // ^ KVP endpoint
                                                                      // JSON endpoint ws_JsonAdapter.aspx
 
@@ -50,33 +50,55 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
-    * Get the gateway password
-    *
-    * @return string
-    */
-    public function getPassword()
+     * Get the gateway username
+     *
+     * @return string
+     */
+    public function getMerchantGUID()
     {
-        return $this->getParameter('password');
+        return $this->getParameter('MerchantGUID');
     }
 
     /**
-    * Set the gateway password
-    *
-    * @return string
-    */
-    public function setPassword($value)
+     * Set the gateway username
+     *
+     * @param string username
+     * @return interface.
+     */
+    public function setMerchantGUID($value)
     {
-        return $this->setParameter('password', $value);
+        return $this->setParameter('MerchantGUID', $value);
+    }
+
+    /**
+     * Set the getway password
+     *
+     * @param string password
+     * @return interface
+     */
+    public function setMerchantPassword($value)
+    {
+        return $this->setParameter('MerchantPassword', $value);
+    }
+
+    /**
+     * Get the gateway password
+     *
+     * @return string
+     */
+    public function getMerchantPassword()
+    {
+        return $this->getParameter('MerchantPassword');
+    }
+
+    public function getEwallet()
+    {
+        return $this->getParameter('eWallet');
     }
     
-    public function getBankAccountPayee()
+    public function setEwallet($value)
     {
-        return $this->getParameter('bankAccountPayee');
-    }
-    
-    public function setBankAccountPayee($value)
-    {
-        return $this->setParameter('bankAccountPayee', $value);
+        return $this->setParameter('eWallet', $value);
     }
 
     /**
@@ -88,26 +110,45 @@ abstract class AbstractRequest extends BaseAbstractRequest
         
         $data = array();
         $data['fn'] = $this->getType();
-        $data['MerchantGUID'] = $this->getUsername();
-        $data['MerchantPassword'] = $this->getPassword();
+        $data['MerchantGUID'] = $this->getMerchantGUID();
+        $data['MerchantPassword'] = $this->getMerchantPassword();
         return $data;
     }
 
     /**
-     * @param SimpleXMLElement $data
-     * @return Response
+     * @return string
      */
-
-    public function sendData($data)
+    protected function getEndpoint()
     {
-        $headers      = array();
-        $httpResponse = $this->httpClient->get($this->getEndpoint() .'?' . http_build_query($data), $headers)->send();
-        return $this->createResponse($httpResponse->getBody());
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
+    /**
+     * @param string $data
+     * @return Response
+     */
+    protected function createResponse($data)
+    {
+        return $this->response = new Response($this, $data);
+    }
     
-/* NEW JSON METOD     
-    public function sendRequest($action, $data = null, $method = RequestInterface::POST)
+    
+    /**
+     * Send a request to the gateway.
+     *
+     * The request should contain the following header settings:
+     *
+     * Content-type: application/json
+     * Authorization: Bearer <OAuth Bearer Token>
+     *
+     * @param string $action
+     * @param array  $data
+     * @param string $method
+     *
+     * @return \Guzzle\Http\Message\Response
+     * @throws InvalidResponseException
+     */
+    public function sendRequest($data = null)
     {
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
@@ -123,8 +164,8 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
         // Create the HTTP request
         $httpRequest = $this->httpClient->createRequest(
-            $method,
-            $this->getEndpoint() . $action,
+            'POST',
+            $this->getEndpoint(),
             array(
                 'Accept'        => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getToken(),
@@ -146,21 +187,26 @@ abstract class AbstractRequest extends BaseAbstractRequest
             );
         }
     }
-*/    
-    /**
-     * @return string
-     */
-    protected function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+    
+    public function sendDataByClass($data, $response = 'Reponse') {
+        $httpResponse = $this->sendRequest($data);
+        try {
+            return $this->response = new $response($this, $httpResponse->json());
+        } catch(\Guzzle\Common\Exception\RuntimeException $e) {
+            if (function_exists('log_message')) {
+                try {
+                    log_message('system', 'Error communicating with payment gateway: ' . (string) $httpResponse->getBody());
+                } catch(Exception $e) {}
+            }
+            throw new InvalidResponseException(
+                'Error communicating with payment gateway: ' . $e->getMessage(),
+                $e->getCode()
+            );
+        }
     }
 
-    /**
-     * @param string $data
-     * @return Response
-     */
-    protected function createResponse($data)
+    public function sendData($data)
     {
-        return $this->response = new Response($this, $data);
+        return $this->sendDataByClass($data, 'Reponse');
     }
 }
