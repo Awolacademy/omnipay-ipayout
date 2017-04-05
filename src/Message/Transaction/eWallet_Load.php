@@ -2,13 +2,14 @@
 
 namespace Omnipay\iPayout\Message\Transaction;
 
-class RefundRequest extends CaptureRequest
+class eWallet_Load extends AbstractRequest
 {
     /**
      * @return string
      */
     public function getType()
     {
-        return 'refund';
+        return 'loadwallet';
     }
 }
+

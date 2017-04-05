@@ -2,13 +2,14 @@
 
 namespace Omnipay\iPayout\Message\Transaction;
 
-class CreditRequest extends AuthorizeRequest
+class eWallet_GetUserAccountStatus extends AbstractRequest
 {
     /**
      * @return string
      */
     public function getType()
     {
-        return 'credit';
+        return 'accountstatus';
     }
 }
+

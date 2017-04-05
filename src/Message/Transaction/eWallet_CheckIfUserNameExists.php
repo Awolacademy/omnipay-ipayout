@@ -2,13 +2,14 @@
 
 namespace Omnipay\iPayout\Message\Transaction;
 
-class PurchaseRequest extends AuthorizeRequest
+class eWallet_CheckIfUserNameExists extends AbstractRequest
 {
     /**
      * @return string
      */
     public function getType()
     {
-        return 'sale';
+        return 'userexists';
     }
 }
+

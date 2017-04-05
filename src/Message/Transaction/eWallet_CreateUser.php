@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\iPayout\Message;
+namespace Omnipay\iPayout\Message\Transaction;
 
 class CreateUser extends AbstractRequest
 {
@@ -12,3 +12,4 @@ class CreateUser extends AbstractRequest
         return 'createuser';
     }
 }
+
