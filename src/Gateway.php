@@ -136,6 +136,10 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CreateUser', $parameters);
     }
     
+    public function checkAccountSatus(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_GetUserAccountStatus', $parameters);
+    }
+
     public function issuePayment(array $parameters = array()) {
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_Load', $parameters);
         // eWallet_Load
@@ -152,13 +156,5 @@ class Gateway extends AbstractGateway
     }
 
 
-    public function checkAccountStatus(array $parameters = array()) {
-        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_GetUserAccountStatus', $parameters);
-    //    
-        /*
-        Guid MerchantGUID, 
-        String MerchantPassword, 
-        String UserName        
-        */
-    }
+
 }

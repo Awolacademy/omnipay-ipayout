@@ -103,6 +103,16 @@ class eWallet
         return $this->setParameter('Address1', $value);
     }
 
+    public function getAddress2()
+    {
+        return $this->getParameter('Address2');
+    }
+
+    public function setAddress2($value)
+    {
+        return $this->setParameter('Address2', $value);
+    }
+    
     public function getCity()
     {
         return $this->getParameter('City');
@@ -161,6 +171,16 @@ class eWallet
     public function setDateOfBirth($value)
     {
         return $this->setParameter('DateOfBirth', $value);
+    }
+
+    public function getCompanyName()
+    {
+        return $this->getParameter('CompanyName');
+    }
+
+    public function setCompanyName($value)
+    {
+        return $this->setParameter('CompanyName', $value);
     }
 
     /**

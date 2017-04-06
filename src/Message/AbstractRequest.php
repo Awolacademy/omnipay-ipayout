@@ -14,78 +14,43 @@ abstract class AbstractRequest extends BaseAbstractRequest
      * @var string
      */
     protected $liveEndpoint = 'https://GAZ.testewallet.com/eWalletWS/ws_JsonAdapter.aspx';
-                                                                       // ^ KVP endpoint
-                                                                       // JSON endpoint ws_JsonAdapter.aspx
 
     /**
      * @var string
      */
     protected $testEndpoint = 'https://GAZ.globalewallet.com/eWalletWS/ws_JsonAdapter.aspx';
-                                                                       // ^ KVP endpoint
-                                                                     // JSON endpoint ws_JsonAdapter.aspx
 
     /**
      * @return string
      */
     abstract public function getType();
 
-    /**
-     * Get the gateway username
-     *
-     * @return string
-     */
+
     public function getUsername()
     {
-        return $this->getParameter('username');
+        return $this->getParameter('UserName');
     }
 
-    /**
-     * Set the gateway username
-     *
-     * @return AbstractRestRequest provides a fluent interface.
-     */
     public function setUsername($value)
     {
-        return $this->setParameter('username', $value);
+        return $this->setParameter('UserName', $value);
     }
 
-    /**
-     * Get the gateway username
-     *
-     * @return string
-     */
     public function getMerchantGUID()
     {
         return $this->getParameter('MerchantGUID');
     }
 
-    /**
-     * Set the gateway username
-     *
-     * @param string username
-     * @return interface.
-     */
     public function setMerchantGUID($value)
     {
         return $this->setParameter('MerchantGUID', $value);
     }
 
-    /**
-     * Set the getway password
-     *
-     * @param string password
-     * @return interface
-     */
     public function setMerchantPassword($value)
     {
         return $this->setParameter('MerchantPassword', $value);
     }
 
-    /**
-     * Get the gateway password
-     *
-     * @return string
-     */
     public function getMerchantPassword()
     {
         return $this->getParameter('MerchantPassword');
@@ -107,7 +72,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
     public function getBaseData()
     {
         $this->validate('MerchantGUID', 'MerchantPassword');
-        
         $data = array();
         $data['fn'] = $this->getType();
         $data['MerchantGUID'] = $this->getMerchantGUID();
@@ -168,7 +132,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
             $this->getEndpoint(),
             array(
                 'Accept'        => 'application/json',
-                'Authorization' => 'Bearer ' . $this->getToken(),
                 'Content-type'  => 'application/json'
             ),
             json_encode($data)

@@ -9,7 +9,12 @@ class eWallet_Load extends AbstractRequest
      */
     public function getType()
     {
-        return 'loadwallet';
+        return 'eWallet_Load';
+    }
+
+    public function sendData($data)
+    {
+        return $this->sendDataByClass($data, '\Omnipay\iPayout\Message\Response\LoadWalletStatusResponse');
     }
 }
 
