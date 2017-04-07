@@ -62,7 +62,7 @@ class Gateway extends AbstractGateway
      */
     public function getUsername()
     {
-        return $this->getParameter('username');
+        return $this->getParameter('UserName');
     }
 
     /**
@@ -72,7 +72,7 @@ class Gateway extends AbstractGateway
      */
     public function setUsername($value)
     {
-        return $this->setParameter('username', $value);
+        return $this->setParameter('UserName', $value);
     }
 
     /**
@@ -126,6 +126,36 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('eWallet', $value);
     }
+    
+    public function setAmount($value)
+    {
+        return $this->setParameter('Amount', $value);
+    }
+
+    public function getAmount($value)
+    {
+        return $this->getParameter('Amount');
+    }
+
+    public function setMerchantReferenceID($value)
+    {
+        return $this->setParameter('MerchantReferenceID', $value);
+    }
+
+    public function getMerchantReferenceID($value)
+    {
+        return $this->getParameter('MerchantReferenceID');
+    }
+
+    public function setAffiliateID($value)
+    {
+        return $this->setParameter('AffiliateID', $value);
+    }
+
+    public function getAffiliateID()
+    {
+        return $this->getParameter('AffiliateID');
+    }
 
     public function checkUserName(array $parameters = array()) {
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CheckIfUserNameExists', $parameters);
@@ -141,18 +171,8 @@ class Gateway extends AbstractGateway
     }
 
     public function issuePayment(array $parameters = array()) {
+       log_message('system', sprintf('issuePayment %s', 'test'));
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_Load', $parameters);
-        // eWallet_Load
-        /*
-        Guid MerchantGUID, 
-        String MerchantPassword,
-        String PartnerBatchID, 
-        String PoolID, 
-        eWalletLoad[] arrAccounts, 
-        Boolean AllowDuplicates,
-        Boolean AutoLoad, 
-        String CurrencyCode
-        */
     }
 
 

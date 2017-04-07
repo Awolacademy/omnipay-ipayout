@@ -15,6 +15,6 @@ class AccountStatusResponse extends Response
         if (isset($this->data->IsError) && $this->data->IsError == 1) {
             return false;
         }
-        return isset($this->data->response) && $this->data->response->m_Code === 1;
+        return isset($this->data->response) && $this->data->response->m_Code === 0 && $this->data->response->AccStatus === 1;
     }
 }

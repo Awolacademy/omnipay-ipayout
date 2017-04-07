@@ -66,6 +66,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('eWallet', $value);
     }
 
+
     /**
      * @return Array
      */
