@@ -56,7 +56,7 @@ class Response extends AbstractResponse
      */
     public function getTransactionId()
     {
-        return ( isset($this->data->response) && isset($this->data->response->TransactionRefID) ) ? $this->data->response->TransactionRefID : null;
+        return (isset($this->data->response) && isset($this->data->response->TransactionRefID) ) ? $this->data->response->TransactionRefID : null;
     }
 
     /**

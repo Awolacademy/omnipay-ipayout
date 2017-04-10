@@ -157,6 +157,7 @@ class Gateway extends AbstractGateway
         return $this->getParameter('AffiliateID');
     }
 
+
     public function checkUserName(array $parameters = array()) {
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CheckIfUserNameExists', $parameters);
     }

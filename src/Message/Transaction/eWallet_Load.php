@@ -19,8 +19,8 @@ class eWallet_Load extends AbstractRequest
         $data['PartnerBatchID'] = $comments;
         $data['arrAccounts'] = array('UserName' => $this->getUserName(),
                                      'Amount'   => $this->getAmount(),
-                                     'Comments' => $comments. "AffilateID: ",
-                                     'MerchantReferenceID' =>  '$this->getMerchantReferenceID()');
+                                     'Comments' => $comments,
+                                     'MerchantReferenceID' =>  $this->getMerchantReferenceID());
         $data['AllowDuplicates'] = true;
         $data['AutoLoad'] = false;
         $data['CurrencyCode'] = "USD";
