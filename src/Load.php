@@ -120,10 +120,6 @@ class Load
         if (empty($this->getMerchantReferenceID())) {
             throw new \InvalidArgumentException('The Merchant Reference ID is required.');
         }
-        
-        if (empty($this->getAffiliateID())) {
-            throw new \InvalidArgumentException('The Affiliate ID is required.');
-        }
 
         foreach (func_get_args() as $key) {
             $value = $this->parameters->get($key);
