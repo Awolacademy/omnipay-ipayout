@@ -92,21 +92,33 @@ class Load
     {
         return $this->getParameter('MerchantReferenceID');
     }
-    
-     public function setAffiliateID($value)
+
+    public function setComments($value)
     {
-        return $this->setParameter('AffiliateID', $value);
+        return $this->setParameter('Comments', $value);
     }
 
-    public function getAffiliateID()
+    public function getComments()
     {
-        return $this->getParameter('AffiliateID');
-    }   
+        return $this->getParameter('Comments');
+    }
+
+    public function setPartnerBatchID($value)
+    {
+        return $this->setParameter('PartnerBatchID', $value);
+    }
+
+    public function getPartnerBatchID()
+    {
+        return $this->getParameter('PartnerBatchID');
+    }
+    
     
     /**
      * Validate this bank account. If the bank account is invalid, InvalidArgumentException is thrown.
      *
      */
+    /*
     public function validate()
     {
         if (empty($this->getUserName())) {
@@ -128,4 +140,5 @@ class Load
             }
         }
     }
+    */
 }

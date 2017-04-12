@@ -127,35 +127,16 @@ class Gateway extends AbstractGateway
         return $this->setParameter('eWallet', $value);
     }
     
-    public function setAmount($value)
+    public function getarrAccounts()
     {
-        return $this->setParameter('Amount', $value);
+        return $this->getParameter('arrAccounts');
     }
-
-    public function getAmount($value)
+    
+    public function setarrAccounts($value)
     {
-        return $this->getParameter('Amount');
+        return $this->setParameter('arrAccounts', $value);
     }
-
-    public function setMerchantReferenceID($value)
-    {
-        return $this->setParameter('MerchantReferenceID', $value);
-    }
-
-    public function getMerchantReferenceID($value)
-    {
-        return $this->getParameter('MerchantReferenceID');
-    }
-
-    public function setAffiliateID($value)
-    {
-        return $this->setParameter('AffiliateID', $value);
-    }
-
-    public function getAffiliateID()
-    {
-        return $this->getParameter('AffiliateID');
-    }
+ 
 
 
     public function checkUserName(array $parameters = array()) {

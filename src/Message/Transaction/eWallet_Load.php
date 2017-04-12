@@ -15,12 +15,40 @@ class eWallet_Load extends AbstractRequest
     public function getData()
     {
         $data = $this->getBaseData();
-        $comments = "Commissions Paid on: ".date("m/d/Y");
-        $data['PartnerBatchID'] = $comments;
-        $data['arrAccounts'] = array('UserName' => $this->getUserName(),
-                                     'Amount'   => $this->getAmount(),
-                                     'Comments' => $comments,
-                                     'MerchantReferenceID' =>  $this->getMerchantReferenceID());
+        $accountsData = $this->getarrAccounts();
+
+        $loadAccounts = array();
+
+        foreach($accountsData as $arrAccounts) {
+            $paymentData =array();
+            if (empty($arrAccounts->getUserName())) {
+                throw new \InvalidArgumentException('The account User Name is required.');
+            } else {
+                $paymentData['UserName'] = $arrAccounts->getUserName();
+            }
+
+            if (empty($arrAccounts->getAmount())) {
+                throw new \InvalidArgumentException('The payout Amount is required.');
+            } else {
+                $paymentData['Amount'] = $arrAccounts->getAmount();
+            }
+
+            if (empty($arrAccounts->getMerchantReferenceID())) {
+                throw new \InvalidArgumentException('The Merchant Reference ID is required.');
+            } else {
+                $paymentData['MerchantReferenceID'] = $arrAccounts->getMerchantReferenceID();
+            }
+
+            if (empty($arrAccounts->getComments())) {
+                throw new \InvalidArgumentException('The Comments field is required.');
+            } else {
+                $paymentData['Comments'] = $arrAccounts->getComments();
+            }
+            $loadAccounts[] = $paymentData;
+        }
+
+        $data['PartnerBatchID'] = $arrAccounts->getPartnerBatchID();
+        $data['arrAccounts'] = $loadAccounts;
         $data['AllowDuplicates'] = true;
         $data['AutoLoad'] = false;
         $data['CurrencyCode'] = "USD";
