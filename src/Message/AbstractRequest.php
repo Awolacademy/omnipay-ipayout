@@ -13,7 +13,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
     /**
      * @var string
      */
-    public $subDomain;
     protected $liveEndpoint = '.globalewallet.com/eWalletWS/ws_JsonAdapter.aspx';
 
     /**
@@ -86,6 +85,17 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         return $this->setParameter('Subdomain', $value);
     }
+    
+    public function getautoLoadPayment()
+    {
+        return $this->getParameter('autoLoadPayment');
+    }
+    
+    public function setautoLoadPayment($value)
+    {
+        return $this->setParameter('autoLoadPayment', $value);
+    }
+    
 
     /**
      * @return Array
@@ -100,15 +110,10 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $data;
     }
 
-    //mixed str_replace ( mixed $search , mixed $replace , mixed $subject [, int &$count ] )
     /**
      * @return string
      */
     /*
-    protected function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
-    }
 */
     protected function getEndpoint()
     {
