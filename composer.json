@@ -1,6 +1,5 @@
 {
     "name": "awolacademy/omnipay-ipayout",
-    "version": "dev-master",
     "description": "iPayout driver for the Omnipay PHP payment processing library",
     "keywords": [
         "gateway",
