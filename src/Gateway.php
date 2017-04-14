@@ -1,10 +1,6 @@
 <?php
 /**
- * iPay Gateway
- *              $gateway->setUsername('68a19ca1-7c45-471f-a896-2342b219c4b9');
-                                        ^ Same on test & live
- *	            $gateway->setPassword('3xzpLSUPqg');
-                                        ^ test password
+ * iPayout Gateway
  */
 
 namespace Omnipay\iPayout;
@@ -136,7 +132,26 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('arrAccounts', $value);
     }
+
+    public function getautoLoadPayment()
+    {
+        return $this->getParameter('autoLoadPayment');
+    }
+    
+    public function setautoLoadPayment($value)
+    {
+        return $this->setParameter('autoLoadPayment', $value);
+    }
  
+    public function getSubdomain()
+    {
+        return $this->getParameter('Subdomain');
+    }
+    
+    public function setSubdomain($value)
+    {
+        return $this->setParameter('Subdomain', $value);
+    }
 
 
     public function checkUserName(array $parameters = array()) {
@@ -148,7 +163,7 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CreateUser', $parameters);
     }
     
-    public function checkAccountSatus(array $parameters = array()) {
+    public function checkAccountStatus(array $parameters = array()) {
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_GetUserAccountStatus', $parameters);
     }
 

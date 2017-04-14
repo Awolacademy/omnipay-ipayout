@@ -13,12 +13,13 @@ abstract class AbstractRequest extends BaseAbstractRequest
     /**
      * @var string
      */
-    protected $liveEndpoint = 'https://GAZ.testewallet.com/eWalletWS/ws_JsonAdapter.aspx';
+    public $subDomain;
+    protected $liveEndpoint = '.globalewallet.com/eWalletWS/ws_JsonAdapter.aspx';
 
     /**
      * @var string
      */
-    protected $testEndpoint = 'https://GAZ.globalewallet.com/eWalletWS/ws_JsonAdapter.aspx';
+    protected $testEndpoint =  '.testewallet.com/eWalletWS/ws_JsonAdapter.aspx';
 
     /**
      * @return string
@@ -75,7 +76,16 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         return $this->setParameter('arrAccounts', $value);
     }
-
+ 
+    public function getSubdomain()
+    {
+        return $this->getParameter('Subdomain');
+    }
+    
+    public function setSubdomain($value)
+    {
+        return $this->setParameter('Subdomain', $value);
+    }
 
     /**
      * @return Array
@@ -90,14 +100,20 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $data;
     }
 
+    //mixed str_replace ( mixed $search , mixed $replace , mixed $subject [, int &$count ] )
     /**
      * @return string
      */
+    /*
     protected function getEndpoint()
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
-
+*/
+    protected function getEndpoint()
+    {
+        return  'https://' . $this->getSubdomain() . ($this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint);
+    }
     /**
      * @param string $data
      * @return Response

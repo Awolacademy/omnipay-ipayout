@@ -12,6 +12,15 @@ class eWallet_Load extends AbstractRequest
     {
         return 'eWallet_Load';
     }
+    public function getautoLoadPayment()
+    {
+        return $this->getParameter('autoLoadPayment');
+    }
+    
+    public function setautoLoadPayment($value)
+    {
+        return $this->setParameter('autoLoadPayment', $value);
+    }
     public function getData()
     {
         $data = $this->getBaseData();
@@ -50,7 +59,7 @@ class eWallet_Load extends AbstractRequest
         $data['PartnerBatchID'] = $arrAccounts->getPartnerBatchID();
         $data['arrAccounts'] = $loadAccounts;
         $data['AllowDuplicates'] = true;
-        $data['AutoLoad'] = false;
+        $data['AutoLoad'] = $this->getautoLoadPayment();
         $data['CurrencyCode'] = "USD";
         return $data;
     }
