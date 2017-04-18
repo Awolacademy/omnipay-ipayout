@@ -4,6 +4,7 @@ namespace Omnipay\iPayout\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 use Omnipay\iPayout\Message\Response\Response;
+use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
  * Abstract Request
@@ -13,12 +14,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
     /**
      * @var string
      */
-    protected $liveEndpoint = '.globalewallet.com/eWalletWS/ws_JsonAdapter.aspx';
+    protected $liveEndpoint = 'https://i-payout.net/eWalletWS/ws_JsonAdapter.aspx';
 
     /**
      * @var string
      */
-    protected $testEndpoint =  '.testewallet.com/eWalletWS/ws_JsonAdapter.aspx';
+    protected $testEndpoint = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx';
 
     /**
      * @return string
@@ -113,11 +114,10 @@ abstract class AbstractRequest extends BaseAbstractRequest
     /**
      * @return string
      */
-    /*
-*/
+
     protected function getEndpoint()
     {
-        return  'https://' . $this->getSubdomain() . ($this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint);
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
     /**
      * @param string $data
