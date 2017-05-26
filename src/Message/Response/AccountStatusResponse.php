@@ -12,9 +12,6 @@ class AccountStatusResponse extends Response
      */
     public function isSuccessful()
     {
-        if (isset($this->data->IsError) && $this->data->IsError == 1) {
-            return false;
-        }
-        return isset($this->data->response) && $this->data->response->m_Code === 0 && $this->data->response->AccStatus === 1;
+        return !$this->isError() && $this->getResponse() && $this->getCode() === 0 && $this->data->response->AccStatus === 1;
     }
 }

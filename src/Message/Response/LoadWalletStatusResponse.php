@@ -13,20 +13,6 @@ class LoadWalletStatusResponse extends Response
 
     public function isSuccessful()
     {
-        if (isset($this->data->IsError) && $this->data->IsError == 1) {
-            return false;
-        }
-        
-        return isset($this->data->response) && $this->data->response->m_Code === 0 && $this->data->response->TransactionRefID;
+        return !$this->isError() && $this->getResponse() && $this->getCode() === 0 && $this->getTransactionId();
     }
-    
-    
-    public function getTransactionID() {
-        if (!isset($this->data->response) && !$this->data->response->TransactionRefID) {
-            return false;
-        }
-
-        return $this->data->response->TransactionRefID;
-    }    
-
 }

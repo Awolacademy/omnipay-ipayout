@@ -73,6 +73,20 @@ class eWallet
         return $this->getParameter('UserName');
     }
 
+    public function setName($value)
+    {
+        $names = explode(' ', $value, 2);
+        $this->setFirstName($names[0]);
+        $this->setLastName(isset($names[1]) ? $names[1] : null);
+
+        return $this;
+    }
+    
+    public function getName()
+    {
+        return trim($this->getFirstName() . ' ' . $this->getLastName());
+    }
+
     public function setFirstName($value)
     {
         return $this->setParameter('FirstName', $value);
@@ -123,11 +137,23 @@ class eWallet
         return $this->setParameter('City', $value);
     }
 
+    public function getPostCode()
+    {
+        return $this->getParameter('ZipCode');
+    }
+    
+    public function setPostCode($value)
+    {
+        return $this->setParameter('ZipCode', $value);
+    }
+
+    /* DEPRECATED: Will be removed in the next version */
     public function getZipCode()
     {
         return $this->getParameter('ZipCode');
     }
 
+    /* DEPRECATED: Will be removed in the next version */
     public function setZipCode($value)
     {
         return $this->setParameter('ZipCode', $value);
@@ -143,12 +169,24 @@ class eWallet
         return $this->setParameter('State', $value);
     }
 
+    /* DEPRECATED: Will be removed in the next version */
     public function getCountry2xFormat()
     {
         return $this->getParameter('Country2xFormat');
     }
 
+    /* DEPRECATED: Will be removed in the next version */
     public function setCountry2xFormat($value)
+    {
+        return $this->setParameter('Country2xFormat', $value);
+    }
+    
+    public function getCountry()
+    {
+        return $this->getParameter('Country2xFormat');
+    }
+
+    public function setCountry($value)
     {
         return $this->setParameter('Country2xFormat', $value);
     }
@@ -179,6 +217,16 @@ class eWallet
     }
 
     public function setCompanyName($value)
+    {
+        return $this->setParameter('CompanyName', $value);
+    }
+    
+    public function getCompany()
+    {
+        return $this->getParameter('CompanyName');
+    }
+
+    public function setCompany($value)
     {
         return $this->setParameter('CompanyName', $value);
     }

@@ -9,7 +9,7 @@ use Omnipay\Common\Helper;
 use Omnipay\iPayout;
 
 /**
- * eWallet class
+ * Load class
  */
 class Load
 {
@@ -112,19 +112,17 @@ class Load
     {
         return $this->getParameter('PartnerBatchID');
     }
-    
-    
+
     /**
      * Validate this bank account. If the bank account is invalid, InvalidArgumentException is thrown.
      *
      */
-    /*
     public function validate()
     {
         if (empty($this->getUserName())) {
             throw new \InvalidArgumentException('The account User Name is required.');
         }
-        
+
         if (empty($this->getAmount())) {
             throw new \InvalidArgumentException('The payout Amount is required.');
         }
@@ -140,5 +138,4 @@ class Load
             }
         }
     }
-    */
 }

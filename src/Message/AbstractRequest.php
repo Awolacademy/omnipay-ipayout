@@ -37,24 +37,24 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('UserName', $value);
     }
 
-    public function getMerchantGUID()
+    public function getMerchantID()
     {
-        return $this->getParameter('MerchantGUID');
+        return $this->getParameter('MerchantID');
     }
 
-    public function setMerchantGUID($value)
+    public function setMerchantID($value)
     {
-        return $this->setParameter('MerchantGUID', $value);
+        return $this->setParameter('MerchantID', $value);
     }
 
-    public function setMerchantPassword($value)
+    public function setAPIPassword($value)
     {
-        return $this->setParameter('MerchantPassword', $value);
+        return $this->setParameter('APIPassword', $value);
     }
 
-    public function getMerchantPassword()
+    public function getAPIPassword()
     {
-        return $this->getParameter('MerchantPassword');
+        return $this->getParameter('APIPassword');
     }
 
     public function getEwallet()
@@ -77,6 +77,9 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('arrAccounts', $value);
     }
  
+    /**
+     * @codeCoverageIgnore
+     */
     public function getSubdomain()
     {
         return $this->getParameter('Subdomain');
@@ -96,18 +99,17 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         return $this->setParameter('autoLoadPayment', $value);
     }
-    
 
     /**
      * @return Array
      */
     public function getBaseData()
     {
-        $this->validate('MerchantGUID', 'MerchantPassword');
+        $this->validate('MerchantID', 'APIPassword');
         $data = array();
         $data['fn'] = $this->getType();
-        $data['MerchantGUID'] = $this->getMerchantGUID();
-        $data['MerchantPassword'] = $this->getMerchantPassword();
+        $data['MerchantGUID'] = $this->getMerchantID();
+        $data['MerchantPassword'] = $this->getAPIPassword();
         return $data;
     }
 
@@ -119,16 +121,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
-    /**
-     * @param string $data
-     * @return Response
-     */
-    protected function createResponse($data)
-    {
-        return $this->response = new Response($this, $data);
-    }
-    
-    
+
     /**
      * Send a request to the gateway.
      *
@@ -146,6 +139,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
      */
     public function sendRequest($data = null)
     {
+        // @codeCoverageIgnoreStart
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
             'request.error',
@@ -155,6 +149,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
                 }
             }
         );
+        // @codeCoverageIgnoreEnd
 
         // Return the response we get back from AlliedWallet Payments
 
@@ -175,18 +170,21 @@ abstract class AbstractRequest extends BaseAbstractRequest
             // Set TLS version to 1.2
             $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6);
             return $httpRequest->send();
+        // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             throw new InvalidResponseException(
                 'Error communicating with payment gateway: ' . $e->getMessage(),
                 $e->getCode()
             );
         }
+        // @codeCoverageIgnoreEnd
     }
     
     public function sendDataByClass($data, $response = 'Reponse') {
         $httpResponse = $this->sendRequest($data);
         try {
             return $this->response = new $response($this, $httpResponse->json());
+        // @codeCoverageIgnoreStart
         } catch(\Guzzle\Common\Exception\RuntimeException $e) {
             if (function_exists('log_message')) {
                 try {
@@ -198,10 +196,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
                 $e->getCode()
             );
         }
-    }
-
-    public function sendData($data)
-    {
-        return $this->sendDataByClass($data, 'Reponse');
+        // @codeCoverageIgnoreEnd
     }
 }

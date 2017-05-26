@@ -27,10 +27,7 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
-        if (isset($this->data->IsError) && $this->data->IsError == 1) {
-            return false;
-        }
-        return isset($this->data->response) && $this->data->response->m_Code === 0;
+        return !$this->isError() && $this->getResponse() && $this->data->response->m_Code === 0;
     }
     
     /**
@@ -38,7 +35,7 @@ class Response extends AbstractResponse
      */
     public function getResponse()
     {
-        return $this->data->response;
+        return isset($this->data->response) ? $this->data->response : NULL;
     }
 
     /**
@@ -56,7 +53,7 @@ class Response extends AbstractResponse
      */
     public function getTransactionId()
     {
-        return (isset($this->data->response) && isset($this->data->response->TransactionRefID) ) ? $this->data->response->TransactionRefID : null;
+        return ($this->getResponse() && isset($this->data->response->TransactionRefID) ) ? $this->data->response->TransactionRefID : null;
     }
 
     /**
@@ -75,7 +72,7 @@ class Response extends AbstractResponse
 
         return implode($errors, '; ');
     }
-        
+
     /**
      * Response text
      *
@@ -83,7 +80,7 @@ class Response extends AbstractResponse
      */
     public function getResponseText()
     {
-        return ( isset($this->data->response) && isset($this->data->response->m_Text) ) ? $this->data->response->m_Text : null;
+        return ($this->getResponse() && isset($this->data->response->m_Text) ) ? $this->data->response->m_Text : null;
     }
 
     /**
@@ -94,6 +91,10 @@ class Response extends AbstractResponse
     public function getCode()
     {
         // m_Code
-        return ( isset($this->data->response) && isset($this->data->response->m_Code) ) ? (int)$this->data->response->m_Code : null;
+        return ($this->getResponse() && isset($this->data->response->m_Code) ) ? (int)$this->data->response->m_Code : null;
+    }
+    
+    public function isError() {
+        return isset($this->data->IsError) && $this->data->IsError == 1 ? true : false;
     }
 }

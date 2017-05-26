@@ -46,8 +46,8 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'MerchantGUID' => '',
-            'MerchantPassword' => ''
+            'MerchantID' => '',
+            'APIPassword' => ''
         );
     }
 
@@ -78,7 +78,7 @@ class Gateway extends AbstractGateway
      */
     public function getMerchantID()
     {
-        return $this->getParameter('MerchantGUID');
+        return $this->getParameter('MerchantID');
     }
 
     /**
@@ -89,7 +89,7 @@ class Gateway extends AbstractGateway
      */
     public function setMerchantID($value)
     {
-        return $this->setParameter('MerchantGUID', $value);
+        return $this->setParameter('MerchantID', $value);
     }
 
     /**
@@ -100,7 +100,7 @@ class Gateway extends AbstractGateway
      */
     public function setAPIPassword($value)
     {
-        return $this->setParameter('MerchantPassword', $value);
+        return $this->setParameter('APIPassword', $value);
     }
 
     /**
@@ -110,7 +110,7 @@ class Gateway extends AbstractGateway
      */
     public function getAPIPassword()
     {
-        return $this->getParameter('MerchantPassword');
+        return $this->getParameter('APIPassword');
     }
 
     public function getEwallet()
@@ -142,19 +142,9 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('autoLoadPayment', $value);
     }
- 
-    public function getSubdomain()
-    {
-        return $this->getParameter('Subdomain');
-    }
-    
-    public function setSubdomain($value)
-    {
-        return $this->setParameter('Subdomain', $value);
-    }
 
-
-    public function checkUserName(array $parameters = array()) {
+    public function checkUserName(array $parameters = array())
+    {
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CheckIfUserNameExists', $parameters);
     }
 
@@ -163,15 +153,13 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_CreateUser', $parameters);
     }
     
-    public function checkAccountStatus(array $parameters = array()) {
+    public function checkAccountStatus(array $parameters = array())
+    {
         return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_GetUserAccountStatus', $parameters);
     }
 
-    public function issuePayment(array $parameters = array()) {
-       log_message('system', sprintf('issuePayment %s', 'test'));
-        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_Load', $parameters);
+    public function issuePayment(array $parameters = array())
+    {
+       return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_Load', $parameters);
     }
-
-
-
 }

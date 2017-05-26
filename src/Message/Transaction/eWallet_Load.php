@@ -12,15 +12,7 @@ class eWallet_Load extends AbstractRequest
     {
         return 'eWallet_Load';
     }
-    public function getautoLoadPayment()
-    {
-        return $this->getParameter('autoLoadPayment');
-    }
-    
-    public function setautoLoadPayment($value)
-    {
-        return $this->setParameter('autoLoadPayment', $value);
-    }
+
     public function getData()
     {
         $data = $this->getBaseData();
@@ -29,30 +21,12 @@ class eWallet_Load extends AbstractRequest
         $loadAccounts = array();
 
         foreach($accountsData as $arrAccounts) {
-            $paymentData =array();
-            if (empty($arrAccounts->getUserName())) {
-                throw new \InvalidArgumentException('The account User Name is required.');
-            } else {
-                $paymentData['UserName'] = $arrAccounts->getUserName();
-            }
-
-            if (empty($arrAccounts->getAmount())) {
-                throw new \InvalidArgumentException('The payout Amount is required.');
-            } else {
-                $paymentData['Amount'] = $arrAccounts->getAmount();
-            }
-
-            if (empty($arrAccounts->getMerchantReferenceID())) {
-                throw new \InvalidArgumentException('The Merchant Reference ID is required.');
-            } else {
-                $paymentData['MerchantReferenceID'] = $arrAccounts->getMerchantReferenceID();
-            }
-
-            if (empty($arrAccounts->getComments())) {
-                throw new \InvalidArgumentException('The Comments field is required.');
-            } else {
-                $paymentData['Comments'] = $arrAccounts->getComments();
-            }
+            $arrAccounts->validate('Comments');
+            $paymentData = array();
+            $paymentData['UserName'] = $arrAccounts->getUserName();
+            $paymentData['Amount'] = $arrAccounts->getAmount();
+            $paymentData['MerchantReferenceID'] = $arrAccounts->getMerchantReferenceID();
+            $paymentData['Comments'] = $arrAccounts->getComments();
             $loadAccounts[] = $paymentData;
         }
 

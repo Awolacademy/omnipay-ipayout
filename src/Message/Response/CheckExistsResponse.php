@@ -12,9 +12,6 @@ class CheckExistsResponse extends Response
      */
     public function isSuccessful()
     {
-        if (isset($this->data->IsError) && $this->data->IsError == 1) {
-            return false;
-        }
-        return isset($this->data->response) && $this->data->response->m_Code === -2;
+        return !$this->isError() && $this->getResponse() && $this->getCode() === -2;
     }
 }
