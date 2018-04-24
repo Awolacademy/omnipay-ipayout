@@ -52,6 +52,16 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
+    public function testUsernamePassword() {
+        $this->gateway->setMerchantID("username");
+        $this->gateway->setAPIPassword("password");
+        $this->gateway->setautoLoadPayment(true);
+
+        $this->assertSame("username", $this->gateway->getMerchantID());
+        $this->assertSame("password", $this->gateway->getAPIPassword());
+        $this->assertTrue($this->gateway->getautoLoadPayment());
+    }
+
     public function testCheckUserExistsSuccess()
     {
         $this->setMockHttpResponse('CheckUserExistsSuccess.txt');
@@ -129,5 +139,18 @@ class GatewayTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertSame('OK', $response->getResponseText());
         $this->assertEquals('48247', $response->getTransactionId());
+    }
+
+    public function testMarkTaxExemption()
+    {
+        $this->setMockHttpResponse('MarkTaxExemptionSuccess.txt');
+
+        $response = $this->gateway->markTaxExemption(array(
+            'arrAccounts' => $this->loadaccounts
+        ))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('OK', $response->getResponseText());
     }
 }

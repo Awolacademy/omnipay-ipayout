@@ -16,6 +16,7 @@ class Gateway extends AbstractGateway
      *
      * @return HttpClient
      */
+    // @codeCoverageIgnoreStart
     protected function getDefaultHttpClient()
     {
         return new HttpClient(
@@ -29,6 +30,7 @@ class Gateway extends AbstractGateway
             )
         );
     }
+    // @codeCoverageIgnoreEnd
     
     /**
      * @return string
@@ -51,6 +53,7 @@ class Gateway extends AbstractGateway
         );
     }
 
+    // @codeCoverageIgnoreStart
     /**
      * Get the gateway username
      *
@@ -70,6 +73,7 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('UserName', $value);
     }
+    // @codeCoverageIgnoreEnd
 
     /**
      * Get the gateway username
@@ -113,6 +117,7 @@ class Gateway extends AbstractGateway
         return $this->getParameter('APIPassword');
     }
 
+    // @codeCoverageIgnoreStart
     public function getEwallet()
     {
         return $this->getParameter('eWallet');
@@ -132,6 +137,7 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('arrAccounts', $value);
     }
+    // @codeCoverageIgnoreEnd
 
     public function getautoLoadPayment()
     {

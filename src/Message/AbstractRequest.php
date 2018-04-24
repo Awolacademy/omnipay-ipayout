@@ -26,7 +26,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
      */
     abstract public function getType();
 
-
     public function getUsername()
     {
         return $this->getParameter('UserName');

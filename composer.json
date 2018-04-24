@@ -47,6 +47,13 @@
     },
     "scripts": {
         "test": "../../bin/phpunit"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "no-api": true,
+            "url": "git@github.com:KnightAR/omnipay-tests.git"
+        }
+    ]
 }
 
