@@ -162,4 +162,9 @@ class Gateway extends AbstractGateway
     {
        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_Load', $parameters);
     }
+
+    public function markTaxExemption(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\iPayout\Message\Transaction\eWallet_MarkPayoutAsTaxExemption', $parameters);
+    }
 }
