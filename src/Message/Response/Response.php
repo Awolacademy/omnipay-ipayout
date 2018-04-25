@@ -63,7 +63,13 @@ class Response extends AbstractResponse
     {
         $errors = array();
         if (!$this->isSuccessful()) {
-            $errors[] = $this->getResponseText();
+            if (!$this->getResponse() && isset($this->data->Message)) {
+                $errors[] = $this->data->Message;
+            }
+            $err = $this->getResponseText();
+            if (!is_null($err)) {
+                $errors[] = $this->getResponseText();
+            }
         }
         
         if (empty($errors)) {
